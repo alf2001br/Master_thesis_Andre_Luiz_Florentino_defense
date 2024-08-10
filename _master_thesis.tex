@@ -11,28 +11,9 @@
 \usepackage{colortbl}
 \usepackage{makecell}
 \usepackage{longtable}
+\usepackage{ragged2e}
+\usepackage{hyperref}
 
-
-%\usepackage{afterpage}
-%\usepackage{amsfonts}
-%\usepackage{comment}
-%\usepackage{csquotes}
-%\usepackage{easytable}
-%\usepackage{here}
-%\usepackage{indentfirst}
-%\usepackage{lipsum}
-%\usepackage{listings}
-%\usepackage{longtable}
-%\usepackage{multicol}
-%\usepackage{multirow}
-%\usepackage{microtype}
-%\usepackage{pdflscape}
-%\usepackage{pgfgantt}
-%\usepackage{setspace}
-%\usepackage{stmaryrd}
-%\usepackage{tabularx}
-%\usepackage{tikz}
-%\usepackage{url}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,9 +70,12 @@
 \input{060-results.tex}
 \input{070-conclusion}
 
+\hypersetup{urlcolor=black}
 \printbibliography
 
+\hypersetup{urlcolor=blue}
 \appendix
 \input{080-systematic-review}
+\input{090-source_code}
 
 \end{document}

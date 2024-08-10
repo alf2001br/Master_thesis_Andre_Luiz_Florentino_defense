@@ -616,7 +616,10 @@
 \hypersetup{%
   %pdftex,%
   pdfborder={0 0 0},%
-  colorlinks={false},%
+  colorlinks={true},%
+  linkcolor={black},
+  citecolor={black},
+  urlcolor={blue},
   % cria "bookmarks" no PDF até o 4° nível,
   % independente do valor de tocdepth, que eu mudo em alguns lugares
   bookmarksdepth=4%
