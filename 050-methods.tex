@@ -306,7 +306,7 @@ Several classes in the datasets, particularly ESC-10, ESC-50, and BDLib2, contai
         \label{fig:methods_normalization_original_wave_form}
 \end{figure}
 
-This type of audio data significantly reduces the accuracy of the classifiers, and therefore, the technique of duration adjustment was merged with trimming and implemented in this study. According to \textcite{Mmushtaq2020}, when applying the trim silence technique as a pre-processing method to the entire audio dataset, a common challenge arises in determining the precise threshold value in \gls{db} \underline{below the reference point} (80 \gls{db} confirmed by peak amplitude normalization), which indicates silence. The improper selection of this threshold value has the potential to lead to the loss of crucial information contained within the audio data and although stated in the article that the threshold of 40 \gls{db} has been settled as the most effective silence trimming value for the used datasets, this value was not suitable when merged with the duration adjustment technique as shown in Figure \ref{fig:methods_normalization_40_db_x_60_db_wave_form} where approximately 1.1 \gls{s} of the audio data was lost when compared with the threshold of this study.
+This type of audio data significantly reduces the accuracy of the classifiers, and therefore, the technique of duration adjustment was merged with trimming and implemented in this study. According to \textcite{Mushtaq2020b}, when applying the trim silence technique as a pre-processing method to the entire audio dataset, a common challenge arises in determining the precise threshold value in \gls{db} \underline{below the reference point} (80 \gls{db} confirmed by peak amplitude normalization), which indicates silence. The improper selection of this threshold value has the potential to lead to the loss of crucial information contained within the audio data and although stated in the article that the threshold of 40 \gls{db} has been settled as the most effective silence trimming value for the used datasets, this value was not suitable when merged with the duration adjustment technique as shown in Figure \ref{fig:methods_normalization_40_db_x_60_db_wave_form} where approximately 1.1 \gls{s} of the audio data was lost when compared with the threshold of this study.
 
 \begin{figure}[htbp]
     \raggedright
@@ -335,7 +335,7 @@ In general, augmentation techniques can help overcome the problem of limited lab
 
 In the systematic review for deep learning methods and data augmentation in sound classification, \textcite{Alli2022} ranked the technique of noise addition with the largest number of occurrences, accounting for 22 publications (39.2\%). The subsequent highest number of occurrences was attributed to the time shift method, encompassing 15 publications (26.7\%), following closely behind were the \gls{gan} based models and pitch shifting, each accounting for 12 publications (21.4\%). Additionally, alternative methods, namely time stretching, mix-up, and background noise, summed 10 (17.8\%), 9 (16.1\%), and 8 (13.6\%) publications, respectively. 
 
- Time stretching, pitch shifting, dynamic range compression and background noise were also used by \textcite{Salamon2017} in their deep convolutional neural network classifier. \textcite{Mmushtaq2020} utilized time stretching, pitch shifting, white noise addition and silence trimming (that dwells between normalization and augmentation techniques) in their regularized deep convolutional neural network while \textcite{Bountourakis2019} considered only time stretching and pitch shifting. Techniques commonly used in the speech recognition helm such as warping the features, masking blocks of frequency channels, and masking blocks of time steps \cite{Park2019} were not found explicitly in the related work and therefore were not considered in this study.
+ Time stretching, pitch shifting, dynamic range compression and background noise were also used by \textcite{Salamon2017} in their deep convolutional neural network classifier. \textcite{Mushtaq2020b} utilized time stretching, pitch shifting, white noise addition and silence trimming (that dwells between normalization and augmentation techniques) in their regularized deep convolutional neural network while \textcite{Bountourakis2019} considered only time stretching and pitch shifting. Techniques commonly used in the speech recognition helm such as warping the features, masking blocks of frequency channels, and masking blocks of time steps \cite{Park2019} were not found explicitly in the related work and therefore were not considered in this study.
 
 After experimenting the data augmentation within all the datasets, five techniques were selected and implemented in this study, namely \textbf{time stretches quickly} where the time of each audio clip of the dataset was stretched by a factor of 1.15 and \textbf{time stretch slowly}, acting in the opposite direction, the audio clip was slowed down by a factor of 0.85 (Figure \ref{fig:methods_augmentation_time_stretch}).
 
@@ -410,7 +410,7 @@ For the purposes of comparison, the feature extraction process of the audio file
         \label{fig:methods_feature_extraction_leap_window}
 \end{figure}
 
-The second method, involved using the entire audio file as input for the feature extraction process (Figure \ref{fig:methods_feature_extraction_single_window}), as proposed by the authors of the datasets ESC-10 \cite{PiczakESC2015}, BDLib2 \cite{Bountourakis2015}, and UrbanSound8K \cite{Salamon2017}, but for normalization purposes, utilized the same sampling rate of 22,050 \gls{hz} of the first method. \Textcite{Vandendriessche2021} also utilized the same method in his \gls{cnn} classifier embedded in \gls{fpga}s and \gls{tpu}s.
+The second method, involved using the entire audio file (single window) as input for the feature extraction process (Figure \ref{fig:methods_feature_extraction_single_window}), as proposed by the authors of the datasets ESC-10 \cite{PiczakESC2015}, BDLib2 \cite{Bountourakis2015}, and UrbanSound8K \cite{Salamon2017}, but for normalization purposes, utilized the same sampling rate of 22,050 \gls{hz} of the first method. \Textcite{Vandendriessche2021} also utilized the same method in his \gls{cnn} classifier embedded in \gls{fpga}s and \gls{tpu}s.
 
 
 \begin{figure}[htbp]
@@ -627,7 +627,7 @@ Before the evaluation flow took place in the VW UP, an experiment was performed 
 \begin{figure}[htbp]
     \raggedright
         \caption{Setup of the indoor experiment using the Raspberry Pi and the notebook.}
-        \includegraphics[width=1\textwidth]{resources/images/050-methods/Methods_evaluation_indoor.jpg}
+        \includegraphics[width=.8\textwidth]{resources/images/050-methods/Methods_evaluation_indoor.jpg}
         \smallcaption{Source: Author}
         \label{fig:methods_evaluation_indoor_experiment}
 \end{figure}
@@ -646,7 +646,7 @@ This approach ensured that the ground truth labels were precisely aligned with t
 
 The evaluation flow was conducted inside of the VW UP, however, the installed microphone illustrated by Figure \ref{fig:methods_evaluation_microphone_aftersales_and_VW_UP} (b) manufactured by the company BURY, with hypercardioid characteristics, electret type, output level Ua (Meß) of 67 mVeff $\pm$3 \gls{db}, acoustic pressure pMeß of 0.1 Pa, and frequency response not informed \cite{BURY2024} was replaced by a lapel microphone model USB Lavalier LUM2 series, condenser type, omnidirectional, with frequency response of 50 Hz to 20 kHz, signal-to-noise ratio 50 dB SPL, and sensitivity of -34 dB ±3 dB \cite{CKMOVA2021} as depicted in Figure \ref{fig:methods_evaluation_microphone_aftersales_and_VW_UP} (a).
 
-The approach employed in the indoor experiments was similarly applied to the outdoor experiments (Figure XX), however, due to the direct connection between the Raspberry Pi and the notebook via the USB-C port and the additional latency introduced into the system through this connection, the total prediction time for these experiments was excluded from consideration.
+The approach employed in the indoor experiments was similarly applied to the outdoor experiments (Figure \ref{fig:methods_evaluation_outdoor_experiment}), however, due to the direct connection between the Raspberry Pi and the notebook via the USB-C port and the additional latency introduced into the system through this connection, the total prediction time for these experiments was excluded from consideration. Moreover, it was not possible to start both applications simultaneously (live prediction in the Raspberry Pi and continuously audio for the ground truth in the notebook), and therefore, a starting and ending flag were establishing using voice command to manually synchronize the audios afterwards in the software Audacity.
 
 \begin{figure}[htbp]
     \raggedright
@@ -659,7 +659,7 @@ The approach employed in the indoor experiments was similarly applied to the out
 \begin{figure}[htbp]
     \raggedright
         \caption{Setup of the outdoor experiment using the Raspberry Pi and the notebook.}
-        \includegraphics[width=1\textwidth]{resources/images/050-methods/Methods_evaluation_microphone_aftersales_VW_UP.png}
-        \smallcaption{Source: Author, "adapted from" \textcite{Roadstar2021} and \textcite{BURY2024} }
-        \label{fig:methods_evaluation_microphone_aftersales_and_VW_UP2}
+        \includegraphics[width=.8\textwidth]{resources/images/050-methods/Methods_evaluation_outdoor.png}
+        \smallcaption{Source: Author}
+        \label{fig:methods_evaluation_outdoor_experiment}
 \end{figure}

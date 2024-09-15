@@ -603,7 +603,7 @@ The fundamental mechanism for computing gradients in a \gls{mlp} is through the 
 
 Optimization algorithms that utilize the complete training set for updating each parameter is referred to as batch training or deterministic gradient methods, where the batch size is equivalent to the total number of observations in the training set. In \textbf{mini-batch} Gradient Descent, the training set is divided into fixed-size batches, and the loss function and model parameter updates are calculated for each batch, allowing for processing large datasets without the need to store all the training data in memory simultaneously. The batch size, a hyperparameter, must be chosen carefully to ensure that the batch loss provides a reasonable approximation of the overall training set loss while still fitting into memory \cite{Bishop2023}. Each complete iteration through the entire training dataset is referred to as an \textbf{epoch}, with multiple epochs typically being conducted during training. 
 
-While Gradient Descent does not ensure discovery of a globally optimal minimum, appropriate hyperparameter selections typically lead to satisfactory local minima. According to \textcite{Choromanska2014}, achieving a global optimum on the training set may not be advantageous, as it is unlikely to result in strong generalized model.
+While Gradient Descent does not ensure discovery of a globally optimal minimum, appropriate hyperparameter selections typically lead to satisfactory local minima. According to \textcite{Choromanska2015}, achieving a global optimum on the training set may not be advantageous, as it is unlikely to result in strong generalized model.
 
 
 \subsection{Convolutional Neural Network (CNN)}

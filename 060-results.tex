@@ -1,10 +1,10 @@
 \chapter{RESULTS}
 \label{chp:results}
 
-In addition to employing grid search and built-in cross-validation to optimize the classifiers described in Chapter \ref{chp:methods}, the impact of two methods to rescale the features was evaluated: normalization and standardization. Further more, the influence of \gls{pca} by considering 98\% of the explained variance was also investigated, resulting in approximately a 50\% reduction in the number of features. The results were evaluated in Excel, with examples using the ESC-10 dataset depicted in Figures \ref{fig:results_ESC-10_classification_results_overview} and \ref{fig:results_ESC-10_classification_results_fold_overview}. The results are compiled in the subsequent sections only as tables.
+In addition to employing grid search and built-in cross-validation to optimize the classifiers described in Chapter \ref{chp:methods}, the impact of two methods to rescale the features was evaluated: normalization and standardization. Further more, the influence of \gls{pca} by considering 98\% of the explained variance was also investigated, resulting in approximately a 50\% reduction in the number of features. All the analysis and results henceforth were evaluated in Excel, with examples using the ESC-10 dataset depicted in Figures \ref{fig:results_ESC-10_classification_results_overview} and \ref{fig:results_ESC-10_classification_results_fold_overview}. The results were compiled in the subsequent sections only as tables.
 
 \begin{figure}[htbp]
-    \raggedright
+    \centering
         \caption{Overview of the classifiers results during the training / classification flow - Example with the ESC-10 dataset.}
         \includegraphics[width=1\textwidth]{resources/images/060-results/Results_classification_flow_ESC-10_2.png}
         \smallcaption{Source: Author}
@@ -12,9 +12,9 @@ In addition to employing grid search and built-in cross-validation to optimize t
 \end{figure}
 
 \begin{figure}[htbp]
-    \raggedright
+    \centering
         \caption{Comparison of the best option for the classifiers results per fold during the training / classification flow - Example with the ESC-10 dataset features original x features augmented.}
-        \includegraphics[width=1\textwidth]{resources/images/060-results/Results_classification_flow_ESC-10_1.png}
+        \includegraphics[width=.95\textwidth]{resources/images/060-results/Results_classification_flow_ESC-10_1.png}
         \smallcaption{Source: Author}
         \label{fig:results_ESC-10_classification_results_fold_overview}
 \end{figure}
@@ -60,9 +60,9 @@ To ensure the soundness of the \gls{esr} algorithm, accuracy rates of benchmark 
 \section{TRAINING AND CLASSIFICATION FLOW}
 \label{sec:results_training_classification_flow}
 
-In this initial stage of the experiments, the main objective is to evaluate the \gls{esr} algorithm implemented in several classifiers regarding its feature selection, feature extraction, classification metrics, processing memory, allocation memory and response time. The evaluation was performed both in a notebook and embedded in the Raspberry Pi 4.
+In this initial stage of the experiments, the main objective is to evaluate the \gls{esr} algorithm implemented in several classifiers regarding its feature selection, feature extraction, classification metrics, processing memory, flash memory and response time. The evaluation was performed both in a notebook and embedded in the Raspberry Pi 4.
 
-To evaluate feature selection, a Python script was developed to generate various models for k-fold cross-validation. These models included normalization, standardization, normalization + \gls{pca}, and standardization + \gls{pca}. Each model was applied to both the original and augmented datasets. On average, the accuracy rates of the top-performing classifiers increased among the datasets ESC-10 (1.5\%) and BDLib2 (7.4\%), but decreased in the \gls{us8k} (-0.7\%). Notably, as depicted in Table \ref{table:results_accuracy_overview_classifiers_aug_ori_1}, the winning classifiers were mostly the models \textbf{augmented normalized} and \textbf{augmented standardized} for ESC-10 and BDLib2 while for \gls{us8k} were the models \textbf{original normalized} and \textbf{original standardized}. The differences between the exceptions and these models were marginal.
+To evaluate the feature selection, a Python script was developed to generate various models for k-fold cross-validation. These models included normalization, standardization, normalization + \gls{pca}, and standardization + \gls{pca}. Each model was applied to both the original and augmented datasets. On average, the accuracy rates of the top-performing classifiers increased among the datasets ESC-10 (1.5\%) and BDLib2 (7.4\%), but decreased in the \gls{us8k} (-0.7\%). Notably, as depicted in Table \ref{table:results_accuracy_overview_classifiers_aug_ori_1}, the winning classifiers were mostly the models \textbf{augmented normalized} and \textbf{augmented standardized} for ESC-10 and BDLib2 while for \gls{us8k} were the models \textbf{original normalized} and \textbf{original standardized}. The differences between the exceptions and these models were marginal.
 
 \begin{table}[ht!]
     \caption[Accuracy rates overview using the benchmark datasets - Models augmented x original (Focus on the classifiers line by line)]{Accuracy rates overview using the benchmark datasets - The color gradient is focused on the classifiers utilized in the models augmented and original, line by line.}
@@ -82,7 +82,7 @@ When analyzing the entire datasets with their respective classifiers, notable pe
     \smallcaption{Source: Author}
 \end{table}
 
-The feature extraction process was evaluated following two methods: the first employed a sliding window of 1 \gls{s}, sampling rate of 22,050 \gls{hz} and 50\% overlapping, while the second method utilized entire audio file as input also with sampling rate of 22,050 \gls{hz}. In both methods, the accuracy across all datasets exhibited an approximate 5\% decline, as evidenced by the gradient color variations among the classifiers presented in Table \ref{table:results_accuracy_overview_features_windowed}. This result aligns well with the findings from \textcite{Salamon2014}, wherein both classifiers \gls{svm} and \gls{rf} had also a decrease in accuracy around 5\% (graphically estimated) when transitioning from 4 \gls{s} to 1 \gls{s} audio slices. 
+The feature extraction process was evaluated following two methods: the first employed a sliding window of 1 \gls{s}, sampling rate of 22,050 \gls{hz} and 50\% overlapping, while the second method utilized entire audio file (single window) as input also with sampling rate of 22,050 \gls{hz}. In the first method (windowed), the accuracy across all datasets exhibited an approximate 5\% decline, as evidenced by the gradient color variations among the classifiers presented in Table \ref{table:results_accuracy_overview_features_windowed}. This result aligns well with the findings from \textcite{Salamon2014}, wherein both classifiers \gls{svm} and \gls{rf} had also a decrease in accuracy around 5\% (graphically estimated) when transitioning from 4 \gls{s} to 1 \gls{s} audio slices. 
 
 \begin{table}[ht!]
     \caption[Accuracy rates overview using the benchmark datasets - Models augmented x windowed (Focus on the classifiers dataset by dataset)]{Accuracy rates overview using the benchmark datasets - The color gradient is focused on the classifiers utilized in the models augmented and windowed, dataset by dataset.}
@@ -130,7 +130,7 @@ At this point, the benchmark Table \ref{table:results_benchmark_accuracy} was up
 
 % Specific objective b).
 
-The dataset created in subsection \ref{subsec:dataset_US8K_AV}, referred to as US8K\_AV, consists of 4.908 files distributed across 6 classes. These files collectively represent a total duration of 4,94 hours of recorded sounds. To maintain consistency and facilitate accuracy comparisons, the original 10-fold split for cross-validation from the source dataset (\gls{us8k}) was retained.
+The dataset created in subsection \ref{subsec:dataset_US8K_AV}, referred to as US8K\_AV, consists of 4,908 files distributed across 6 classes. These files collectively represent a total duration of 4.94 hours of recorded sounds. To maintain consistency and facilitate accuracy comparisons, the original 10-fold split for cross-validation from the source dataset (\gls{us8k}) was retained.
 
 Similarly to the \gls{us8k} dataset, the augmentation process resulted in a slight decline in accuracy rates for the top-performing classifiers among the machine learning techniques, whereas the neural network models exhibited a marginal improvement (Table \ref{table:results_accuracy_overview_us8k_av_aug_ori_1}, upper area). Considering the time-consuming effort required for training the augmented model and the substantial increase in the size of the feature model subsequently, there appears to be no practical justification for adopting augmentation techniques within this tailored dataset.
 
@@ -144,10 +144,70 @@ Considering the original normalized model, \textbf{\gls{svm}} and \textbf{\gls{a
     \smallcaption{Source: Author}
 \end{table}
 
+%The $t$\_statistic` specifically quantifies the difference between the means of these two groups, normalized by the variability of their differences. It serves as an indicator of whether there is a statistically significant difference between the two sets of accuracy measurements. A higher absolute value of $t$\_statistic suggests a greater likelihood that the observed difference is not due to random chance.
+
+To finalize the evaluation of the feature extraction process, the aforementioned 5\% reduction in accuracy between the augmented and windowed models were statistically evaluated with paired samples $t$-test using the results plotted in Table \ref{table:results_accuracy_overview_features_windowed} and Table \ref{table:results_accuracy_overview_us8k_av_aug_ori_1}. The hypotheses for this evaluation were formulated as follows:
+
+\begin{itemize}
+    \item Null hypothesis ($H_0$): There is no significant difference between the performance of the augmented model and the windowed model;
+    \item Alternative hypothesis ($H_a$): There is a significant difference between the performance of the augmented model and the windowed model.
+\end{itemize}
+
+Given the $p$-value = 0.005, the null hypothesis was rejected in all datasets as illustrated in Table \ref{table:results_paired_t-test_datasets}, and therefore, there is a statistically significant difference in performance between the augmented and windowed models within the datasets and classifiers analyzed. This pattern was also observed across classifiers among the datasets, albeit with a higher probability ($p$-value = 0.05), and with \gls{gnb} as the exception (Table \ref{table:results_paired_t-test_classifiers}).
+
+%This result is not conclusive; rather, it provides evidence that needs to be consistently observed and replicated in further studies to identify a reliable trend.
+
+\begin{table}[ht!]
+    \caption[Statistic evaluation of the accuracy results between the augmented and windowed models among datasets]{Statistic evaluation of the accuracy results between the augmented and windowed models among datasets.}
+    \label{table:results_paired_t-test_datasets}
+    \centering
+    \begin{tabular}{
+        >{\arraybackslash}m{0.30\textwidth} | >
+        {\centering\arraybackslash}m{0.30\textwidth} | >
+        {\centering\arraybackslash}m{0.30\textwidth}}
+        \Xhline{2\arrayrulewidth}
+        \rowcolor{lightgray}
+        \textbf{Dataset} & \textbf{$t$-test statistic} & \textbf{$p$-value}\\
+        \hline
+            BDLib2      & 4.064637      & 0.004781 \\
+            ESC-10      & 7.491015      & 0.000138 \\
+            \gls{us8k}  & 6.106191      & 0.000488 \\
+            US8K\_AV    & 4.974953      & 0.001610 \\
+     \Xhline{2\arrayrulewidth}
+    \end{tabular}
+    \smallcaption{Source: Author}
+\end{table}
+
+
+\begin{table}[ht!]
+    \caption[Statistic evaluation of the accuracy results between the augmented and windowed models among classifiers]{Statistic evaluation of the accuracy results between the augmented and windowed models among classifiers.}
+    \label{table:results_paired_t-test_classifiers}
+    \centering
+    \begin{tabular}{
+        >{\arraybackslash}m{0.30\textwidth} | >
+        {\centering\arraybackslash}m{0.30\textwidth} | >
+        {\centering\arraybackslash}m{0.30\textwidth}}
+        \Xhline{2\arrayrulewidth}
+        \rowcolor{lightgray}
+        \textbf{Classifier} & \textbf{$t$-test statistic} & \textbf{$p$-value}\\
+        \hline
+            \gls{rf}     & 8.872540       & 0.003019 \\
+            \gls{gnb}    & 1.977806       & 0.142361 \\
+            \gls{k-nn}   & 5.265241       & 0.013351 \\
+            \gls{lr}     & 3.211662       & 0.048894 \\
+            \gls{svm}    & 3.320547       & 0.045036 \\
+            Voting       & 3.346427       & 0.044176 \\
+            \gls{ann}    & 5.679546       & 0.010816 \\
+            \gls{cnn} 1D & 5.378761       & 0.012585 \\
+     \Xhline{2\arrayrulewidth}
+    \end{tabular}
+    \smallcaption{Source: Author}
+\end{table}
+
 
 % Specific objective c).
 
-During the training of the \gls{cnn} 2D models, the architecture that demonstrated the best performance for the sliding window process was adapted from \textcite{Su2020}, achieving an average accuracy of 80\% with 1.5 million trainable parameters. Notably, the model adapted from \textcite{Luz2021} had fewer trainable parameters (200,000) and attained the highest score of 86\%. However, it exhibited a significant drop in accuracy during the sliding window process, decreasing to 77\%, as shown in Table \ref{table:results_accuracy_overview_us8k_av_cnn_2D}. This pattern was consistently observed across all datasets, including a modest improvement in average accuracy resulting from the augmentation process, which was not identified in the previous classifiers. Due to resource limitations and a low trade-off, a windowed augmented model was not investigated.
+During the training of the \gls{cnn} 2D models, the architecture that demonstrated the best performance for the sliding window process was adapted from \textcite{Su2020}, achieving an average accuracy of 80\% with 1.5 million trainable parameters. This model also presented a decrease in accuracy between the augmented and windowed models (statistically confirmed across folds with paired sample $t$-test and $p$-value < 0.05). Notably, the model adapted from \textcite{Luz2021} had fewer trainable parameters (200,000) and attained the highest score (86\%) in the single window process. However, it exhibited a significant drop in accuracy during the sliding window process, decreasing to 77\%, as shown in Table \ref{table:results_accuracy_overview_us8k_av_cnn_2D}. This pattern was consistently observed across all datasets, including a modest improvement in average accuracy resulting from the augmentation process, which was not identified in the previous classifiers. Due to resource limitations and low trade-off, the windowed augmented model was not investigated.
 
 \begin{table}[ht!]
     \caption[Accuracy rates for each fold of the tailored dataset US8K\_AV.]{Accuracy rates for each fold of the tailored dataset US8K\_AV, models original and augmented, both using two different architectures.}
@@ -158,10 +218,10 @@ During the training of the \gls{cnn} 2D models, the architecture that demonstrat
 \end{table}
 
 
-At this moment, the following outcomes were identified and will be adopted hereinafter:
+At this moment, the following outcomes were identified and will henceforth be adopted:
 \begin{itemize}
     \item Models utilizing handcrafted features will be normalized. The processes of standardization and \gls{pca} will no longer be considered for these models;
-    \item The augmentation process has been observed to enhance the performance of \gls{cnn} 2D models across all datasets, however, it will not be applied to the windowed model for the US8K\_AV dataset;
+    \item The augmentation process has been observed to enhance the performance of \gls{cnn} 2D models across all datasets, however, it will not be applied in the windowed model for the US8K\_AV dataset;
     \item A comprehensive benchmark has been established for top-performing classifiers using k-fold cross-validation accuracy metrics (Table \ref{table:results_feature_extraction_and_classifiers_us8k_av}). This benchmark includes:
     \begin{itemize}
         \item Machine learning techniques employing handcrafted features: \textbf{\gls{svm}} and \textbf{\gls{lr}};
@@ -169,7 +229,7 @@ At this moment, the following outcomes were identified and will be adopted herei
         \item Neural networks utilizing aggregated features: \textbf{\gls{cnn} 2D}.
     \end{itemize}
     \item \textbf{\gls{rf}} has been incorporated into the benchmark to represent the results involving ensemble methods;
-    \item Only \textbf{windowed models} will be considered.
+    \item Only \textbf{windowed models} will be considered in order to minimize the inference time.
 \end{itemize}
 
 
@@ -207,13 +267,13 @@ At this moment, the following outcomes were identified and will be adopted herei
 
 Upon completing the training and classification flow, the next step involves deploying the best-performing classifier to the Raspberry Pi and evaluating its performance in terms of accuracy and real-time processing capabilities. However, before proceeding, several definitions must be established. A 'predictive model' refers to a trained classifier saved as a pickle file (.PKL) for \gls{svm}, \gls{lr}, and \gls{rf}, or as an .HDF5 file for neural networks such as \gls{ann}, \gls{cnn} 1D, and \gls{cnn} 2D. The term 'predictive algorithm' or '\gls{esr} algorithm' encompasses the necessary functions to record live audio, extract features, feed them into the predictive model, and return the inference as a single class.
 
-The 'total prediction time' is defined as the aggregate duration of the individual operations involved in the predictive algorithm. The time required for feature extraction denotes the duration necessary to extract features according to the specified method (handcrafted or aggregated). The average time required by the predictive model to perform sound classification using the feature vectors from all frames is referred to as classification time. Therefore, the total prediction time corresponds to the sum of the feature extraction process and the classification time, nevertheless, it does not account for the time required to digitize the audio.
+The 'response time' or 'total prediction time' is defined as the aggregate duration of the individual operations involved in the predictive algorithm. The time required for feature extraction denotes the duration necessary to extract features according to the specified method (handcrafted or aggregated). The average time required by the predictive model to perform sound classification using the feature vectors from all frames is referred to as classification time. Therefore, the total prediction time corresponds to the sum of the feature extraction process and the classification time, nevertheless, it does not account for the time required to digitize the audio.
 
 'Processing memory', particularly \gls{ram}, serves as a critical component in the predictive algorithm, facilitating the rapid storage and retrieval of data necessary for real-time audio signal processing involving the initial stages of sound capture, feature extraction, loading the predictive model and performing the classification tasks.
 
 The predictive models were trained using folds 2 through 10, reserving fold 1 as the testing set. This decision was substantiated by Table \ref{table:results_feature_extraction_and_classifiers_us8k_av} , which indicated that fold 1 was among the top five folds across all architectural models. Additionally, fold 1 exhibited an accuracy of 80.54\%, closely aligning with the result of the 10-fold cross-validation (80.03\%). Anticipating the necessity to embed the neural network models, the predictive models for \gls{ann}, \gls{cnn} 1D, and \gls{cnn} 2D underwent a quantization process using TensorFlow Lite (TFLite) with standard parameters. Notably, there was no significant decline in accuracy following this process.
 
-To compare the performance of an algorithm on a notebook and a Raspberry Pi, it is essential to ensure that both devices are in good condition and have similar operating systems. The same version of the algorithm and development environment should be used to guarantee equivalent workload conditions as well as monitor the temperature to avoid throttling and execute multiple tests to obtain a reliable average. Consideration must be given to the differences in processor architectures (x86 vs. ARM) and whether the algorithm can effectively utilize multiple cores. Evaluation of scheduling policies, memory management, and potential conflicts of shared resources among cores is also necessary. Given that the objective of this study is not an objective comparison \textit{per se} of these devices but rather a qualitative one, all these factors were verified superficially. The averaged results after 10 loops are compiled in Table \ref{table:results_classifiers_performance_us8k_av}.
+To compare the performance of an algorithm on a notebook and a Raspberry Pi, it is essential to ensure that both devices are in good condition and have similar operating systems. The same version of the algorithm and development environment should be used to guarantee equivalent workload conditions as well as monitor the temperature to avoid throttling and execute multiple tests to obtain a reliable average. Consideration must be given to the differences in processor architectures (x86 vs. ARM) and whether the algorithm can effectively utilize multiple cores. Evaluation of scheduling policies, memory management, and potential conflicts of shared resources among cores is also necessary. Given that the objective of this study is not an quantitative comparison \textit{per se} of these devices but rather a qualitative one, all these factors were verified superficially. The averaged results after 10 loops were compiled in Table \ref{table:results_classifiers_performance_us8k_av}.
 
 \begin{table}[ht!]
     \caption[Processing memory (RAM) and total prediction time.]{Processing memory (RAM) and total prediction time. Comparison between the predictive algorithms in the notebook and Raspberry Pi.}
@@ -244,7 +304,7 @@ To compare the performance of an algorithm on a notebook and a Raspberry Pi, it 
     \smallcaption{Source: Author}
 \end{table}
 
-Additionally, the non-volatile storage medium that retains data even when the power is turned off (Flash memory) was also evaluated. In this study the Flash memory represents the size of the predictive models, sorted by size as follows: 19.0 \gls{k}\gls{b} (\gls{lr}), 6,218.0 \gls{k}\gls{b} (\gls{cnn} 1D), 8,928.0 \gls{k}\gls{b} (\gls{ann}), 11,920.0 \gls{k}\gls{b} (\gls{cnn} 2D), 32,761.0 \gls{k}\gls{b} (\gls{svm}) and 249,522.0 \gls{k}\gls{b} (\gls{rf}). This information was normalized with the values of RAM and total prediction time to create the spider web chart depicted in Figure \ref{fig:Results_spider_chart_us8k_av_cnn2d} which supports the decision of the predictive algorithm with \textbf{\gls{cnn} 2D} embedded in the Raspberry Pi.
+Additionally, the non-volatile storage medium that retains data even when the power is turned off (Flash memory) was also evaluated. In this study the Flash memory represents the size of the predictive models, sorted by size as follows: 19.0 \gls{k}\gls{b} (\gls{lr}), 6,218.0 \gls{k}\gls{b} (\gls{cnn} 1D), 8,928.0 \gls{k}\gls{b} (\gls{ann}), 11,920.0 \gls{k}\gls{b} (\gls{cnn} 2D), 32,761.0 \gls{k}\gls{b} (\gls{svm}) and 249,522.0 \gls{k}\gls{b} (\gls{rf}). This information was normalized (min -1\% and max +1\% to avoid zero in the log axis) with the values of RAM and total prediction time to create the spider web chart depicted in Figure \ref{fig:Results_spider_chart_us8k_av_cnn2d} which supports the decision of the predictive algorithm with \textbf{\gls{cnn} 2D} embedded in the Raspberry Pi.
 
 \begin{figure}[htbp]
     \raggedright
@@ -257,7 +317,7 @@ Additionally, the non-volatile storage medium that retains data even when the po
 Prior to the evaluation flow, an indoor experiment as described in section \ref{sec:methods_evaluation} was conducted to assess the effectiveness of the predictive algorithm \gls{cnn} 2D. The experimental setup comprised a notebook, a Raspberry Pi, and identical microphones arranged in a meeting room with an average background noise level of 60 \gls{db}, primarily due to air conditioning. The sound source was positioned 5 meters away from the microphones, and approximately 120 \gls{s} of audio from YouTube was played at maximum volume on an iPhone 11, resulting in the generation of 107 audio samples. The \gls{spl} measured at the microphones reached a peak of 75 \gls{db} during playback but predominantly ranged between 60 to 65 \gls{db} due to the blending with background noise. The results of this experiment are presented in Table \ref{table:results_indoor_experiments}.
 
 \begin{table}[ht!]
-    \caption[Classification metrics of the indoor experiment.]{Classification metrics of the indoor experiment.}
+    \caption[Classification metrics of the indoor experiments.]{Classification metrics of the indoor experiments.}
     \label{table:results_indoor_experiments}
     \centering
     \begin{tabular}{
@@ -310,10 +370,65 @@ Prior to the evaluation flow, an indoor experiment as described in section \ref{
 \end{table}
 
 
+
 \section{EVALUATION FLOW}
 \label{sec:results_evaluation_flow}
 
+Parei aqui...
 
+
+\begin{table}[ht!]
+    \caption[Classification metrics of the outdoor experiments.]{Classification metrics of the outdoor experiments.}
+    \label{table:results_outdoor_experiments}
+    \centering
+    \begin{tabular}{
+        >{\raggedright\arraybackslash}m{0.26\textwidth} | >
+        {\centering\arraybackslash}m{0.15\textwidth} | >
+        {\centering\arraybackslash}m{0.15\textwidth} | >
+        {\centering\arraybackslash}m{0.15\textwidth} | >
+        {\centering\arraybackslash}m{0.15\textwidth}}
+        \Xhline{2\arrayrulewidth}
+        \rowcolor{lightgray}
+        \textbf{Classes} & \textbf{Precision} & \textbf{Recall} & \textbf{f1-score} & \textbf{Samples} \\
+        \hline
+        \rowcolor{gray!20}
+        Occ.: \hfill dog\_bark & & & & \\
+        background        & 94.0\%   & 85.0\%  & 89.0\%  & 40  \\
+        children playing  & 0.0\%    & 0.0\%   & 0.0\%   & 0   \\
+        dog\_bark         & 95.0\%   & 90.0\%  & 92.0\%  & 41  \\
+        silence           & 0.0\%    & 0.0\%   & 0.0\%   & 0   \\
+        \hline
+        Weighted avg      & 95.0\%   & 88.0\%  & 91.0\%  & 81  \\
+        \hline
+        \rowcolor{gray!20}
+        Occ.: \hfill children\_playing & & & & \\
+        background        & 91.0\%    & 91.0\%  & 91.0\%  & 96   \\
+        children playing  & 95.0\%    & 95.0\%  & 95.0\%  & 167  \\
+        \hline
+        Weighted avg      & 93.0\%    & 93.0\%  & 93.0\%  & 263  \\
+        \hline
+        \rowcolor{gray!20}
+        Occ.: \hfill car\_horn & & & & \\
+        background        & 98.0\%   & 94.0\%  & 96.0\%  & 171  \\
+        car\_horn         & 100.0\%  & 59.0\%  & 74.0\%  & 17   \\
+        children playing  & 0.0\%    & 0.0\%   & 0.0\%   & 0    \\
+        dog\_bark         & 0.0\%    & 0.0\%   & 0.0\%   & 0    \\
+        \hline
+        Weighted avg      & 98.0\%    & 90.0\%  & 94.0\%  & 188  \\
+        \hline
+        \rowcolor{gray!20}
+        Occ.: \hfill siren & & & & \\
+        background        & 100.0\%    & 99.0\%  & 99.0\%  & 2,163  \\
+        children playing  & 0.0\%      & 0.0\%   & 0.0\%   & 0      \\
+        dog\_bark         & 0.0\%      & 0.0\%   & 0.0\%   & 0      \\
+        siren             & 65.0\%     & 85.0\%  & 73.0\%  & 13     \\
+        \hline
+        Weighted avg      & 100.0\%    & 99.0\%  & 99.0\%  & 2,176  \\
+        \hline
+     \Xhline{2\arrayrulewidth}
+    \end{tabular}
+    \smallcaption{Source: Author}
+\end{table}
 
 
 % Specific objective d).
