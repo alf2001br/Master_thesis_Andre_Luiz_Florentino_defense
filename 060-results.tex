@@ -314,7 +314,7 @@ Additionally, the non-volatile storage medium that retains data even when the po
         \label{fig:Results_spider_chart_us8k_av_cnn2d}
 \end{figure}
 
-Prior to the evaluation flow, an indoor experiment as described in section \ref{sec:methods_evaluation} was conducted to assess the effectiveness of the predictive algorithm \gls{cnn} 2D. The experimental setup comprised a notebook, a Raspberry Pi, and identical microphones arranged in a meeting room with an average background noise level of 60 \gls{db}, primarily due to air conditioning. The sound source was positioned 5 meters away from the microphones, and approximately 120 \gls{s} of audio from YouTube was played at maximum volume on an iPhone 11, resulting in the generation of 107 audio samples. The \gls{spl} measured at the microphones reached a peak of 75 \gls{db} during playback but predominantly ranged between 60 to 65 \gls{db} due to the blending with background noise. The results of this experiment are presented in Table \ref{table:results_indoor_experiments}.
+Prior to the evaluation flow, an indoor experiment as described in section \ref{sec:methods_evaluation} was conducted to assess the effectiveness of the predictive algorithm \gls{cnn} 2D. The experimental setup comprised a notebook, a Raspberry Pi, and identical microphones arranged in a meeting room with an average background noise level of 60 \gls{db}, primarily due to air conditioning. The sound source was positioned 5 meters away from the microphones, and approximately 120 \gls{s} of audio from YouTube was played at maximum volume on an iPhone 11, resulting in the generation of 107 audio samples. The \gls{spl} measured at the microphones reached a peak of 75 \gls{db} during playback, but predominantly ranged between 60 \gls{db} to 65 \gls{db} due to the blending with background noise. The result of this experiment is presented in Table \ref{table:results_indoor_experiments}, and inferred a sound algorithm with high precision and f1-score ranging from 77\% to 95\%, both per analyzed class. 
 
 \begin{table}[ht!]
     \caption[Classification metrics of the indoor experiments.]{Classification metrics of the indoor experiments.}
@@ -328,7 +328,7 @@ Prior to the evaluation flow, an indoor experiment as described in section \ref{
         {\centering\arraybackslash}m{0.15\textwidth}}
         \Xhline{2\arrayrulewidth}
         \rowcolor{lightgray}
-        \textbf{Classes} & \textbf{Precision} & \textbf{Recall} & \textbf{f1-score} & \textbf{Samples} \\
+        \textbf{Classes} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Samples} \\
         \hline
         \rowcolor{gray!20}
         Played: \hfill dog\_bark & & & & \\
@@ -370,12 +370,48 @@ Prior to the evaluation flow, an indoor experiment as described in section \ref{
 \end{table}
 
 
-
 \section{EVALUATION FLOW}
 \label{sec:results_evaluation_flow}
 
-Parei aqui...
+The evaluation process was conducted on the streets of Santo André and São Bernardo do Campo during regular traffic hours. All windows of the vehicle were closed, the infotainment system was turned off (no music), there was no additional passenger inside the vehicle (no speech), and the air conditioning was set to level 2, producing a \gls{spl} near the microphones of approximately 65 \gls{db}. Both microphones were attached to the passenger sun visor, near the vehicle's Bluetooth microphone.
 
+The first experiment, designated "Driving on streets 01", aimed to evaluate the performance of the \gls{esr} algorithm under real driving conditions, with speeds ranging from 10 to 50 km/h and maximum \gls{spl} of 80 \gls{db}. This setting involved a broad soundscape typically encountered in large cities. The experiment lasted 3,690 \gls{s} ($\approx$1 hour) and produced 3,310 audio clips, each lasting approximately 1.114578 \gls{s} instead of the intended 1 \gls{s}. This discrepancy was caused by the chunk size of 8,192 samples used in the Raspberry Pi to prevent overflow during audio recording. 
+
+Although none of the relevant classes (dog\_bark, children\_playing, car\_horn, and siren) were present during the experiment, the results demonstrated a robust algorithm with a F1-score reaching 99\%, as illustrated by the confusion matrix in Figure \ref{fig:Results_evaluation_driving_streets_01}.
+
+\begin{figure}[htbp]
+    \raggedright
+        \caption{Confusion matrix of the first experiment "Driving on streets 01" without the presence of relevant classes.}
+        \includegraphics[width=.65\textwidth]{resources/images/060-results/Results_evaluation_driving_streets_01.png}
+        \smallcaption{Source: Author}
+        \label{fig:Results_evaluation_driving_streets_01}
+\end{figure}
+
+The chunk function in Python operates as a buffer, with each buffer containing 1,024 samples by default, which can then either be retained or discarded by the algorithm. Continuous data flow from a microphone, if recorded and saved without segmentation, would excessively consume processor resources and potentially lead to system crashes. To address this issue, most Python libraries utilizes chunks of data instead of a continuous audio stream. While in the notebook the chunk size can be set to lower values such 256 or 512 without overflow problems, in the context of Raspberry Pi, where resource are limited, chunking the data with higher values (2,048, 4,096 or higher) facilitates smoother stream flow and prevents memory leaks. However, higher chunk sizes introduces some latency in the audio recording, in average a few dozen of \gls{mi}\gls{s}, reaching in higher values, no more than one hundred \gls{mi}\gls{s}.
+
+In an effort to mitigate the latency induced by the chunk size of 8,192 samples employed in the \gls{esr} algorithm embedded in the Raspberry Pi, three experiments were conducted with the chunk size adjusted to 4,096 which represents the upper limit before encountering buffer input overflow. For reference, the chunk size utilized in the notebook was set to 1,024 samples. 
+
+The first experiment, titled "Driving on Streets 02", with one class of interest (siren), spanned a duration of 737 \gls{s} and resulted in the generation of 721 audio clips. The second experiment, "Driving on Streets 03", also with one class of interest (dog\_bark) had a considerably longer duration of 2,834 \gls{s} and produced 2,774 audio clips. The final experiment, "Driving on Streets 04", with two classes of interest (siren and car\_horn) lasted for 1,368 \gls{s} and yielded 1,339 audio clips. Each of these experiments produced audio clips with approximately 1.021678 \gls{s} instead of 1.114578 \gls{s}, nevertheless, the F1-score in all three experiments was considerable lower, reaching 50\%, 22\% and 50\% respectively.
+
+By comparing the audio clip recorded in the Raspberry Pi with the corresponding segment from the continuous audio recorded in the notebook, it is evident that the reduction in chunk size induced distortions across various frequency bands, as illustrated in Figure \ref{fig:Results_evaluation_driving_streets_02_04}, and adversely affected the inferences generated by the predictive algorithm. These distortions were also subjectively confirmed by listening and comparing the audio clips manually.
+
+\begin{figure}[htbp]
+    \raggedright
+        \caption{Comparison between the audio clip recorded with chunk = 4,096 in the Raspberry Pi and the continuous audio recorded in the notebook.}
+        \includegraphics[width=1\textwidth]{resources/images/060-results/Results_evaluation_driving_streets_02_04.png}
+        \smallcaption{Source: Author}
+        \label{fig:Results_evaluation_driving_streets_02_04}
+\end{figure}
+
+Once the optimal chunk size for the Raspberry Pi was established at 8,192 samples, the objective of the subsequent experiments was to decisively identify four relevant sound classes: dog\_bark, children\_playing, car\_horn, and siren. A cumulative duration exceeding 10 hours of audio recordings was obtained through regular driving, as initially described in this section. However, as anticipated, the acquisition of sounds pertaining to the dog\_bark and children\_playing classes proved challenging in urban street environments. These sounds are predominantly encountered in leisure areas and parks, which are indeed target operational environments for the C-Bot. Consequently, the experiments for these two classes were conducted with the vehicle in a stationary position rather than in motion but maintained all other specifications previously described.
+
+The experiment designated "Driving on streets 05" consisted of approximately 90 \gls{s} of recording with the sound-emitting source (a single dog) situated around 5 meters away in a pet park. This experiment produced 81 audio clips. The second stationary experiment, "Driving on streets 06", extended for 293 \gls{s}, yielding 263 audio clips, and involved approximately 15 children playing in "Cidade da Criança" park, located between 10 and 15 meters from the parked vehicle.
+
+The experiment "Driving on streets 07" took place in a parking lot and lasted for 210 \gls{s}, producing 188 audio clips. This experiment aimed to evaluate the car\_horn class and included two phases: during the first half, the sound-emitting source was static (parked vehicle) while the vehicle equipped with the \gls{esr} algorithm was in motion at approximately 30 km/h. The parked vehicle started to honk its horn when the moving vehicle was around 30 meters away; it continue honking as it passed by at a closest distance of 4 meters and stopped when the distance reached around 30 meters again. During the second half of the experiment, both vehicles were in motion, maintaining an approximate distance of 10 meters from each other.
+
+Finally, the last experiment titled "Driving on streets 08", was conducted in a neighborhood characterized by numerous hospitals and trauma centers. This experiment had the longest duration with 2,425 \gls{s}. During this period, one event pertaining to the siren class was identified when an ambulance approached from the opposite direction to the vehicle equipped with the \gls{esr} algorithm. The ambulance was moving at a slow pace due to traffic congestion, while the vehicle equipped with the \gls{esr} algorithm maintained a speed of 25 km/h. The siren event lasted approximately 15 \gls{s}; notably, the ambulance was not visible to the driver in the beginning of the event for a few seconds during this period. Assuming the ambulance as stationary, the speed of the vehicle with the \gls{esr} algorithm, and the event duration, it is possible to infer that the ambulance was approximately 100 meters away when the event started.
+
+The inference results from these four experiments have been compiled in Table \ref{table:results_outdoor_experiments}.
 
 \begin{table}[ht!]
     \caption[Classification metrics of the outdoor experiments.]{Classification metrics of the outdoor experiments.}
@@ -389,10 +425,10 @@ Parei aqui...
         {\centering\arraybackslash}m{0.15\textwidth}}
         \Xhline{2\arrayrulewidth}
         \rowcolor{lightgray}
-        \textbf{Classes} & \textbf{Precision} & \textbf{Recall} & \textbf{f1-score} & \textbf{Samples} \\
+        \textbf{Classes} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Samples} \\
         \hline
         \rowcolor{gray!20}
-        Occ.: \hfill dog\_bark & & & & \\
+        Driving on the streets 05 & & & & \\
         background        & 94.0\%   & 85.0\%  & 89.0\%  & 40  \\
         children playing  & 0.0\%    & 0.0\%   & 0.0\%   & 0   \\
         dog\_bark         & 95.0\%   & 90.0\%  & 92.0\%  & 41  \\
@@ -401,14 +437,14 @@ Parei aqui...
         Weighted avg      & 95.0\%   & 88.0\%  & 91.0\%  & 81  \\
         \hline
         \rowcolor{gray!20}
-        Occ.: \hfill children\_playing & & & & \\
+        Driving on the streets 06 & & & & \\
         background        & 91.0\%    & 91.0\%  & 91.0\%  & 96   \\
         children playing  & 95.0\%    & 95.0\%  & 95.0\%  & 167  \\
         \hline
         Weighted avg      & 93.0\%    & 93.0\%  & 93.0\%  & 263  \\
         \hline
         \rowcolor{gray!20}
-        Occ.: \hfill car\_horn & & & & \\
+        Driving on the streets 07 & & & & \\
         background        & 98.0\%   & 94.0\%  & 96.0\%  & 171  \\
         car\_horn         & 100.0\%  & 59.0\%  & 74.0\%  & 17   \\
         children playing  & 0.0\%    & 0.0\%   & 0.0\%   & 0    \\
@@ -417,7 +453,7 @@ Parei aqui...
         Weighted avg      & 98.0\%    & 90.0\%  & 94.0\%  & 188  \\
         \hline
         \rowcolor{gray!20}
-        Occ.: \hfill siren & & & & \\
+        Driving on the streets 08 & & & & \\
         background        & 100.0\%    & 99.0\%  & 99.0\%  & 2,163  \\
         children playing  & 0.0\%      & 0.0\%   & 0.0\%   & 0      \\
         dog\_bark         & 0.0\%      & 0.0\%   & 0.0\%   & 0      \\
@@ -430,5 +466,3 @@ Parei aqui...
     \smallcaption{Source: Author}
 \end{table}
 
-
-% Specific objective d).
