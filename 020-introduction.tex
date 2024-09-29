@@ -28,9 +28,9 @@ There is a substantial body of literature covering \gls{esr} algorithms that are
 
 Urban mobility is a complex interaction of energy usage, movement patterns, and spatial allocation, and particularly in densely populated cities, space is a scarce and highly valuable resource. The extent and design of available space determine individuals' abilities to accomplish their professional and personal objectives, reconcile their desires and necessities, and enhance the quality of their living and working conditions. An alternative to achieving these goals relies on urban centers being planned with reduced vehicle presence, decreased parking infrastructure, and minimized environmental pollution. Furthermore, the integration of previously distinct and individual mobility systems is necessary to create a cohesive and efficient urban mobility network.
 
-The concept of "SmartCity" has emerged as a response to the global phenomenon of urbanization and the projected growth of cities. This overarching term, embraced by politics, business, administration, and urban planning, encapsulates comprehensive development strategies aimed at enhancing efficiency, technological advancement, sustainability, and inclusivity within cities, primarily concentrate on technical, economic, and social innovations \cite{EDAG2020}.
+The concept of "Smart City" has emerged as a response to the global phenomenon of urbanization and the projected growth of cities. This overarching term, embraced by politics, business, administration, and urban planning, encapsulates comprehensive development strategies aimed at enhancing efficiency, technological advancement, sustainability, and inclusivity within cities, primarily concentrate on technical, economic, and social innovations \cite{EDAG2020}.
 
-To fulfill the objectives of SmartCity endeavors, certain technical and urban planning prerequisites need to be addressed, namely a few of them:
+To fulfill the objectives of Smart City endeavors, certain technical and urban planning prerequisites need to be addressed, namely a few of them:
 
 \begin{itemize}
     \item Establishing designated areas for new mobility concepts where only bicycles are allowed, prohibiting individual or private vehicles. Pedestrians should always have priority over other vehicles, and designated pedestrian crossings may not be necessary;
@@ -43,7 +43,7 @@ To fulfill the objectives of SmartCity endeavors, certain technical and urban pl
     \item Collaborating with municipalities, industry stakeholders, and civil society to develop and expand these concepts.
 \end{itemize}
 
-One critical component of SmartCities will be the implementation of the autonomous transport systems, named hereinafter as C-Bots, swarm-intelligent, multi-functional, and fully autonomous robotic vehicles. These vehicles rely on emissions-free energy derived from fuel cells and possess modular and adaptable features, enabling constant usage throughout the day. Moreover, C-Bots can be equipped with rudimentary tools integrated into their "mover" component and can be fitted with additional modules to serve as passenger carriers, cargo transporters, or city cleaning devices, depending on specific requirements. Figure \ref{fig:introduction_C-Bot_ecosystem} illustrates the proposed ecosystem of the C-Bots under development by the company EDAG Engineering GmbH since 2019.
+One critical component of Smart Cities will be the implementation of the autonomous transport systems, named hereinafter as C-Bots, swarm-intelligent, multi-functional, and fully autonomous robotic vehicles. These vehicles rely on emissions-free energy derived from fuel cells and possess modular and adaptable features, enabling constant usage throughout the day. Moreover, C-Bots can be equipped with rudimentary tools integrated into their "mover" component and can be fitted with additional modules to serve as passenger carriers, cargo transporters, or city cleaning devices, depending on specific requirements. Figure \ref{fig:introduction_C-Bot_ecosystem} illustrates the proposed ecosystem of the C-Bots under development by the company EDAG Engineering GmbH since 2019.
 
 \begin{figure}[htbp]
     \raggedright
@@ -71,20 +71,15 @@ In this phase, the C-Bots are equipped with speech recognition capabilities enab
 \section{OBJECTIVE}
 \label{sec:introduction_objective}
 
-The objective of this study is to develop and implement an \gls{esr} algorithm in embedded systems for autonomous vehicles ranging from level 2 to level 5. This can be achieved by investigating existing sound recognition algorithms, analyzing their performance, and selecting the most suitable ones for real-time embedded implementation.
+The objective of this study is to develop and implement an \gls{esr} algorithm in embedded systems to be deployed in the C-Bot when the project reaches its next milestone in 2025 (Phase 4). This can be achieved by investigating existing sound recognition algorithms, analyzing their performance, and selecting the most suitable ones for real-time embedded implementation.
 
-
-\subsection{General objective}
-\label{subsec:objectives_general}
-
-As a general objective, this study intends to investigate whether it is feasible to enhance the perception capabilities of autonomous vehicles by enabling them to recognize and classify environmental sounds, merging the output into the sensor fusion network to produce specific responses from the vehicle \gls{ee} architecture in due time. If the feasibility is confirmed, this study may contribute to improving their safety, decision-making, and overall autonomy. 
-
-Considering the context presented in section \ref{sec:introduction_context}, and the fact that the C-Bot hardware construction is under development in a foreign country, an alternative approach to validate this study is proposed using as context, a regular passenger vehicle, with the \gls{esr} algorithm embedded in a high-end general-purpose platform, a separated microphone array to emulate the audio processing capabilities of the vehicle control unit and the same microphone utilized in the vehicle for speech recognition tasks.
 
 \subsection{Specific objectives}
 \label{subsec:objectives_specifics}
 
-To achieve the general objective, this section outlines the specific objectives of this study:
+Considering the context presented in section \ref{sec:introduction_context}, and the fact that the C-Bot hardware construction is under development in a foreign country, an alternative approach to validate this study is proposed using as context, a regular passenger vehicle, with the \gls{esr} algorithm embedded in a high-end general-purpose platform, a separated microphone array to emulate the audio processing capabilities of the vehicle control unit and a lapel microphone.
+
+To achieve the proposed objective given the alternative approach, this section outlines the specific objectives of this study:
 
 \begin{itemize}
     \item Dataset benchmarking to confirm the accuracy of the classifiers:
@@ -93,9 +88,9 @@ To achieve the general objective, this section outlines the specific objectives 
         \item Implement and train different classifiers utilizing the benchmark datasets;
         \item Assess the accuracy of the classifiers by comparing their results against known ground truth labels (validation sets) and the literature results.
     \end{itemize}
-    \item Construction of a new dataset tailored for environmental sounds in the  context of autonomous vehicles:
+    \item Construction of a new dataset tailored for environmental sounds in the  context of autonomous vehicles for smart cities (C-Bot):
     \begin{itemize}
-        \item Define the relevant classes within the benchmark datasets that are relevant for this study, considering also the alternative approach proposed in the general objectives;
+        \item Define the relevant classes within the benchmark datasets that are relevant for this study, and implement new classes if necessary;
     \end{itemize}
     \item Training and evaluating the classifiers on a notebook and in an embedded device:
     \begin{itemize}
@@ -107,7 +102,6 @@ To achieve the general objective, this section outlines the specific objectives 
     \begin{itemize}
         \item Prepare the Raspberry Pi model to receive a microphone array and a microphonic sensor;
         \item Evaluate the classifier's performance in the realistic context of a passenger vehicle, taking into consideration factors such as background noise, varying environmental conditions, and real-time response requirements;
-        \item Assess the classifier's ability to contribute to the enhancement of the vehicle's safety, decision-making, and overall autonomy. As ramification of this study, assess the contribution of the classifier in the context of a regular passenger vehicle.
     \end{itemize}
 \end{itemize}
 
@@ -125,77 +119,4 @@ Chapter \ref{chp:results} presents the results of the conducted experiments enco
 
 At last, chapter \ref{chp:conclusion} brings the conclusion and future work within the context of \gls{esr} for autonomous vehicles and regular passenger vehicles.
 
-
-\section{HYPOTHESES}
-\label{sec:introduction_hypotheses}
-
-The purpose of this chapter is to enumerate all conceivable hypotheses that may arise from the present study, whether they pertain to practical applications or scientific advancements. The specific articulation of how these hypotheses will be incorporated into the dissertation remains to be determined.
-
-\begin{table}[ht!]
-    \caption[List of alternative hypotheses $H_a$ defined during the study development ]{List of alternative hypotheses $H_a$, potential application or contribution, and current status of its implementation on this study.}
-    \label{table:hypotheses_list_ha}
-    \centering
-    \begin{tabular}{p{1.7cm}|p{6.5cm}|p{6.5cm}}
-        \Xhline{2\arrayrulewidth} 
-        \rowcolor{lightgray}
-        \textbf{Id} & \textbf{Description} & \textbf{Application or contribution} \\
-        $H_1$ & 
-        \gls{esr} is performed in milliseconds, perhaps even seconds, before other types of object detection (cameras, radars, and sensors) & 
-        Other sensors can be set to higher levels of accuracy based on \gls{esr} outputs or be complemented by sensor fusion techniques. \\
-        \hline
-        \rowcolor{gray!20} Status $H_1$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Alternative $H_a$}. \textcite{Veeraraghavan2020} confirmed by  Simulink simulations the feasibility of an acoustic controlled driving system level 3. Initial findings of \textcite{Yin2023} also confirmed a suitable response time (Section \ref{chp:rel}) }} \\       
-        \hline \hline
-%        $H_4$ & 
-%        \gls{esr} has potential applications also in regular passenger cars, without any additional costs on hardware or devices. & 
-%        Adding code lines in the current \gls{vcu} or infotainment \gls{ecu} and broadcast messages or warnings to the driver.\\
-%        \hline
-%        \rowcolor{yellow} Status $H_4$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Null ($H_0$) or alternative $H_a$}. Under investigation...}} \\       
-%        \hline \hline
-        $H_2$ & 
-        Driving a vehicle requires: sight or vision, touch or somatosensation, and hearing or audition. To this publication, autonomous vehicles have been neglecting the last one, it’s plausible to state that \gls{esr} integrated in the vehicle \gls{ee} architecture will improve its drivability experience. & 
-        Safer conditions to the vehicle occupants and overall better user experience.\\
-        \hline
-        \rowcolor{gray!20} Status $H_2$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Alternative $H_a$}. To this point, this study concludes that the integration of \gls{esr} in autonomous vehicles seems logical and feasible, however, there is no empirical evidence of improvement in the drivability experience.}} \\       
-        \Xhline{2\arrayrulewidth}
-    \end{tabular}
-    \smallcaption{Source: Author}
-\end{table}
-
-
-\begin{table}[ht!]
-    \caption[List of null hypotheses $H_0$ defined during the study development ]{List of null hypotheses $H_0$, potential application or contribution, and current status of its implementation on this study.}
-    \label{table:hypotheses_list_h0}
-    \centering
-    \begin{tabular}{p{1.7cm}|p{6.5cm}|p{6.5cm}}
-        \Xhline{2\arrayrulewidth} 
-        \rowcolor{lightgray}
-        \textbf{Id} & \textbf{Description} & \textbf{Application or contribution} \\
-        \hline
-        $H_3$ &
-        A regular passenger car microphone has auditory sensitivity higher or equivalent than human ears. &
-        If confirmed, there will be no need of special acoustic devices to identify specific sounds. \\
-        \hline
-        \rowcolor{gray!20} Status $H_3$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Null ($H_0$)}. However, it is imperative to note that automotive microphones do exhibit sufficient attributes capable of detecting a substantial range of acoustic events. This inference imparts significant technological insights regarding the use of automotive microphones in environmental sound recognition (Section \ref{subsec:microphones_conclusion}).}} \\
-        \hline \hline
-        $H_4$ & 
-        \gls{esr} will not improve decision-making algorithms of autonomous vehicles by merging its output into the sensor fusion network of the vehicle. & 
-        If null, faster and more accurate information can be transmitted to the driver. \\
-        \hline
-        \rowcolor{gray!20} Status $H_4$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Null $H_0$}. One government funding project \cite{ISPOT2020} is exploring this topic, and in the private industry, one prototype already implemented audio sensor fusion \cite{WAYMO2023}, (Section \ref{chp:rel})}} \\        
-        \hline \hline
-%        $H_4$ & 
-%        \gls{esr} has potential applications also in regular passenger cars, without any additional costs on hardware or devices. & 
-%        Adding code lines in the current \gls{vcu} or infotainment \gls{ecu} and broadcast messages or warnings to the driver.\\
-%        \hline
-%        \rowcolor{yellow} Status $H_4$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Null ($H_0$) or alternative $H_a$}. Under investigation...}} \\       
-%        \hline \hline
-        $H_5$ & 
-        It is not possible to identify an object trajectory through \gls{esr} in a time frame (sound vector). & 
-        If null, different \gls{esr} outputs to the driver depending whether the identified sound is moving away or approaching the vehicle.\\
-        \hline
-        \rowcolor{gray!20} Status $H_5$ & \multicolumn{2}{c}{\parbox{13.4cm}{\textbf{Null ($H_0$)}. It is possible using external microphone array \cite{Marchegiani2022} and \cite{Sun2021}, and with internal microphone array \cite{Shabtai2019}, (Section \ref{chp:rel}) }} \\           
-        \Xhline{2\arrayrulewidth}
-    \end{tabular}
-    \smallcaption{Source: Author}
-\end{table}
 
